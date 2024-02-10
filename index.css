@@ -1,0 +1,699 @@
+html,
+button,
+input,
+select,
+textarea {
+    font-family: "Source Sans", "Circled Numbers", "Dingbats", "Noto Emoji", "Verdana", "sans-serif";
+    font-size: 16px;
+}
+
+header {
+    grid-column: 1/3;
+    grid-row: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid black;
+    background-color: gainsboro;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    overflow: clip;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: 100vw;
+    height: 100vh;
+}
+
+aside {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    border-left: 1px solid black;
+}
+
+main {
+    background-color: #777;
+    grid-column: 1;
+    grid-row: 2;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+#toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menu {
+    user-select: none;
+}
+
+.menu_title img {
+    display: block;
+    height: 36px;
+    padding: 4px;
+}
+
+.uses_prob_input {
+    background-color: white;
+}
+
+.prob_input {
+    display: inline-grid;
+    grid-template-columns: 32px 32px 32px 32px 32px;
+    grid-template-rows: 1fr;
+}
+
+.die {
+    width: 30px;
+    grid-row: 1;
+}
+
+.die:hover {
+    background-color: green;
+}
+
+#settings {
+    grid-column: 1;
+    grid-row: 1;
+    overflow: clip;
+    width: 212px;
+}
+
+.setting_name {
+    border-bottom: 1px solid black;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 4px;
+    padding-right: 3px;
+}
+
+.setting_name::before {
+    content: "\25cb ";
+    opacity: 0.6;
+}
+
+.law_setting {
+    background-color: #cde1c9;
+}
+
+.company_setting {
+    background-color: crimson;
+}
+
+.general_setting {
+    background-color: lightgray;
+}
+
+.india_setting {
+    background-color: indianred;
+    /*color: #f4d3b1*/
+}
+
+
+#boardwrap {
+    width: 3610px;
+    height: 1658px;
+    position: relative;
+    margin: 0 auto;
+    transform: scale(55%);
+    transform-origin: top left;
+    display: flex;
+}
+
+#boardwrap #board {
+    box-shadow: 0px 1px 10px #0008;
+    isolation: isolate;
+    transform-origin: 0 0;
+}
+
+#board {
+    background-image: url("images/jocoboard.jpg");
+    width: 3250px;
+    height: 1658px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    user-select: none;
+}
+
+#parliament {
+    float: right;
+    background-image: url("images/spinner.png");
+    width: 360px;
+    height: 360px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    user-select: none;
+}
+
+.arm {
+    position: relative;
+    left: -240px;
+    top: 110px;
+    transform: scale(35%);
+    background-image: url("images/arm.png");
+    background-repeat: no-repeat;
+    transform-origin: 420px 70px;
+}
+
+header #randomize {
+    padding: 0 8px;
+    margin: 4px 0;
+}
+
+header #buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    padding: 0 8px;
+    margin: 4px 0;
+    right: 0;
+    position: absolute;
+}
+
+header .viewpoint_button {
+    margin-right: 0;
+}
+
+button:disabled {
+    color: gray;
+    border-color: gainsboro;
+    outline-color: gray;
+}
+
+button:enabled:active:hover {
+    border-color: darkgray white white darkgray;
+    padding: 2px 11px 0px 13px;
+}
+
+button:enabled {
+    border-color: white darkgrey darkgrey white;
+}
+
+button {
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 28px;
+    padding: 1px 12px 1px 12px;
+    background-color: gainsboro;
+    border: 2px solid;
+    outline: 1px solid black;
+}
+
+#card_panel {
+    text-align: left;
+    margin: 24px;
+    width: 3250px;
+}
+
+#card_panel .card {
+    display: inline-block;
+    margin: 9px;
+}
+
+#deck_outer {
+    position: relative;
+}
+
+.piece {
+    position: absolute;
+    pointer-events: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition-property: top, left;
+    transition-duration: 700ms;
+    transition-timing-function: ease;
+    filter: drop-shadow(0 1px 2px #000a);
+    transform: translate(-50%, -50%);
+    width: 93px;
+    height: 74px;
+    z-index: 1;
+}
+
+.piece.closed {
+    width: 96px;
+    height: 75px;
+    background-image: url("images/closedorder.png")
+}
+
+.piece.social_power {
+    border-radius: 8px;
+    background-image: url("images/social_power.png");
+}
+
+.piece.share_power {
+    border-radius: 8px;
+    background-image: url("images/share_power.png");
+}
+
+.piece.shipping_power {
+    border-radius: 8px;
+    background-image: url("images/shipping_power.png");
+}
+
+.piece.manufacturing_power {
+    border-radius: 8px;
+    background-image: url("images/manufacturing_power.png");
+}
+
+.piece.plustwo {
+    background-image: url("images/plustwo.png");
+}
+
+.piece.plusthree {
+    background-image: url("images/plusthree.png");
+}
+
+.piece.tower0 {
+    border-radius: 8px;
+    background-image: url("images/roof.svg");
+}
+
+.piece.tower1 {
+    height: 148px;
+    border-radius: 8px;
+    background-image: url("images/tower1.svg");
+}
+
+.piece.tower2 {
+    transform: translate(-50%, -53%);
+    height: 222px;
+    border-radius: 8px;
+    background-image: url("images/tower2.svg");
+}
+
+.piece.tower3 {
+    transform: translate(-50%, -53%);
+    height: 296px;
+    border-radius: 8px;
+    background-image: url("images/tower3.svg");
+}
+
+.piece.gov_punjab {
+    background-image: url("images/gov_punjab.png");
+}
+
+.piece.gov_bombay {
+    background-image: url("images/gov_bombay.png");
+}
+
+.piece.gov_delhi {
+    background-image: url("images/gov_delhi.png");
+}
+
+.piece.gov_maratha {
+    background-image: url("images/gov_maratha.png");
+}
+
+.piece.gov_hyderabad {
+    background-image: url("images/gov_hyderabad.png");
+}
+
+.piece.gov_mysore {
+    background-image: url("images/gov_mysore.png");
+}
+
+.piece.gov_madras {
+    background-image: url("images/gov_madras.png");
+}
+
+.piece.gov_bengal {
+    background-image: url("images/gov_bengal.png");
+}
+
+.piece.regiment {
+    background-image: url("images/regiment.png");
+}
+
+#china {
+    position: absolute;
+    left: 3264px;
+    top: 1390px;
+    filter: drop-shadow(0 1px 2px #000a);
+}
+
+#china>img {
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+}
+
+.army {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 279px;
+    height: 74px;
+}
+
+.army>img {
+    filter: drop-shadow(0 1px 2px #000a);
+    margin: 3px;
+}
+
+.seazone>img {
+    filter: drop-shadow(0 1px 2px #000a);
+}
+
+.unrest_zone {
+    position: absolute;
+    width: 160px;
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#bombay_unrest {
+    width: 80px;
+}
+
+#madras_unrest {
+    width: 80px;
+}
+
+#mysore_unrest {
+    width: 80px;
+}
+
+/* NOTE: So there's a bit of a problem with the way the flags work. Since
+they're made of both a fill and outline svg overlaid on each other, making the
+flag a 'piece' class would put a drop shadow on each child, that's too much drop
+shadows, so this solution is not making them piece classes and just applying
+a position: absolute on each one.*/
+#punjab_flag {
+    position: absolute;
+}
+
+#bombay_flag {
+    position: absolute;
+}
+
+#delhi_flag {
+    position: absolute;
+}
+
+#maratha_flag {
+    position: absolute;
+}
+
+#hyderabad_flag {
+    position: absolute;
+}
+
+#mysore_flag {
+    position: absolute;
+}
+
+#madras_flag {
+    position: absolute;
+}
+
+#bengal_flag {
+    position: absolute;
+}
+
+.outlinecapital {
+    width: 50px;
+    height: 60px;
+    background-image: url("images/flagstaroutline.svg");
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.outlinedominated {
+    width: 50px;
+    height: 60px;
+    background-image: url("images/flagnostaroutline.svg");
+    transform: translate(-50%, -50%);
+    position: absolute;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.piece.capital {
+    width: 50px;
+    height: 74px;
+    background-image: url("images/flagnostar.svg");
+    /*background-image: url("images/flagstar.svg");*/
+}
+
+.piece.dominated {
+    width: 50px;
+    height: 74px;
+    background-image: url("images/flagnostar.svg");
+}
+
+.silver {
+    filter: invert(60%) sepia(0%) saturate(1406%) hue-rotate(134deg) brightness(84%) contrast(83%) drop-shadow(0 1px 2px #000a);
+}
+
+.gold {
+    filter: invert(0%) sepia(91%) saturate(1244%) hue-rotate(3deg) brightness(107%) contrast(103%) drop-shadow(0 1px 2px #000a);
+}
+
+.bronze {
+    /*filter: invert(56%) sepia(82%) saturate(434%) hue-rotate(348deg) brightness(92%) contrast(88%) drop-shadow(0 1px 2px #000a);*/
+    filter: invert(0%) sepia(24%) saturate(7427%) hue-rotate(320deg) brightness(91%) contrast(93%);
+    /*filter: invert(86%) sepia(22%) saturate(448%) hue-rotate(339deg) brightness(96%) contrast(99%);*/
+}
+
+.piece.unrest {
+    position: static;
+    width: 40px;
+    height: 40px;
+}
+
+.company_status {
+    width: 39px;
+    height: 46px;
+    background-image: url("images/redpawn.svg");
+}
+
+.generic_status {
+    width: 39px;
+    height: 46px;
+    background-image: url("images/blackpawn.svg");
+}
+
+.card {
+    width: 217px;
+    height: 339px;
+    border-radius: 16px;
+    background-color: #cde1c9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 0 1px #223f21 1px 1px 4px #0008;
+}
+
+.card.law_back {
+    background-image: url("images/cards/lawback.jpg");
+}
+
+.card.law0 {
+    background-image: url("images/cards/law0.jpg")
+}
+
+.card.law1 {
+    background-image: url("images/cards/law1.jpg")
+}
+
+.card.law2 {
+    background-image: url("images/cards/law2.jpg")
+}
+
+.card.law3 {
+    background-image: url("images/cards/law3.jpg")
+}
+
+.card.law4 {
+    background-image: url("images/cards/law4.jpg")
+}
+
+.card.law5 {
+    background-image: url("images/cards/law5.jpg")
+}
+
+.card.law6 {
+    background-image: url("images/cards/law6.jpg")
+}
+
+.card.law7 {
+    background-image: url("images/cards/law7.jpg")
+}
+
+.card.law8 {
+    background-image: url("images/cards/law8.jpg")
+}
+
+.card.law9 {
+    background-image: url("images/cards/law9.jpg")
+}
+
+.card.law10 {
+    background-image: url("images/cards/law10.jpg")
+}
+
+.card.law11 {
+    background-image: url("images/cards/law11.jpg")
+}
+
+.card.law12 {
+    background-image: url("images/cards/law12.jpg")
+}
+
+.card.law13 {
+    background-image: url("images/cards/law13.jpg")
+}
+
+.card.law14 {
+    background-image: url("images/cards/law14.jpg")
+}
+
+.card.law15 {
+    background-image: url("images/cards/law15.jpg")
+}
+
+.card.law16 {
+    background-image: url("images/cards/law16.jpg")
+}
+
+.card.law17 {
+    background-image: url("images/cards/law17.jpg")
+}
+
+.card.law18 {
+    background-image: url("images/cards/law18.jpg")
+}
+
+.card.law19 {
+    background-image: url("images/cards/law19.jpg")
+}
+
+.card.law20 {
+    background-image: url("images/cards/law20.jpg")
+}
+
+.card.law21 {
+    background-image: url("images/cards/law21.jpg")
+}
+
+.card.law22 {
+    background-image: url("images/cards/law22.jpg")
+}
+
+.card.law23 {
+    background-image: url("images/cards/law23.jpg")
+}
+
+.card.law24 {
+    background-image: url("images/cards/law24.jpg")
+}
+
+.card.deregulation {
+    background-image: url("images/cards/deregulation.jpg")
+}
+
+
+/* Dual Slider from https://medium.com/@predragdavidovic10/native-dual-range-slider-html-css-javascript-91e778134816 */
+.range_container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 10px;
+    /*margin: 35% auto;*/
+}
+
+.sliders_control {
+    position: relative;
+    min-height: 16px;
+}
+
+.form_control {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 7px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #C6C6C6;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #C6C6C6;
+    cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    background: #f7f7f7;
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+    -webkit-box-shadow: inset 0 0 3px #387bbe, 0 0 9px #387bbe;
+}
+
+/* input[type="number"] {
+  color: #8a8383;
+  width: 50px;
+  height: 30px;
+  font-size: 20px;
+  border: none;
+} */
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    width: 100%;
+    position: absolute;
+    background-color: #C6C6C6;
+    pointer-events: none;
+}
+
+.fromSlider {
+    /* This used to be an id style which worked, but when you change it to a class style, the input style above overrides it, so !important is needed. */
+    height: 0 !important;
+    z-index: 1;
+}
+
+.form_control_container__time__input {
+    width: 50px;
+}
+
+#circle {
+    position: absolute;
+    left: 2215px;
+    top: 838px;
+    width: 600px;
+    height: 600px;
+    -webkit-border-radius: 300px;
+    -moz-border-radius: 300px;
+    border-radius: 300px;
+    background: red;
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+
+<template id="prob_input_template">
+    <div class="prob_input">
+        <img class="die_1 die" onclick="dieclicked(this)" src="images/d1.svg" style="grid-column: 1;">
+        <img class="die_2 die" onclick="dieclicked(this)" src="images/d2.svg" style="grid-column: 2;">
+        <img class="die_3 die" onclick="dieclicked(this)" src="images/d3.svg" style="grid-column: 3;">
+        <img class="die_4 die" onclick="dieclicked(this)" src="images/d4.svg" style="grid-column: 4;">
+        <img class="die_5 die" onclick="dieclicked(this)" src="images/d5.svg" style="grid-column: 5;">
+        <img class="die_6 die" onclick="dieclicked(this)" src="images/d6.svg" style="grid-column: 6;">
+    </div>
+</template>
+
+<template id="dual_range">
+<div class="range_container">
+    <div class="sliders_control">
+        <input class="fromSlider" type="range" value="10" min="0" max="100" />
+        <input class="toSlider" type="range" value="40" min="0" max="100" />
+    </div>
+    <div class="form_control">
+        <div class="form_control_container">Min</div>
+        <input class="fromInput form_control_container__time__input" type="number" value="10" min="0"
+            max="100" />
+        <div class="form_control_container">Max</div>
+        <input class="toInput form_control_container__time__input" type="number" value="40" min="0"
+            max="100" />
+    </div>
+</div>
+</template>
+
+<head>
+<title>John Company: Second Edition Randomizer</title>
+<link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
+<link rel="stylesheet" href="index.css">
+<!-- <script src="h2c.js"></script> -->
+<script defer src="index.js"></script>
+<script src="h2c.js"></script>
+<script defer type="module">
+/*     document.querySelector('#board').addEventListener('click', () => {
+        html2canvas(document.querySelector("#card_panel"), {
+        }).then((canvas) => {
+            console.log("ahjkdsk")
+            let link = document.createElement('a')
+            link.download = 'JohnCompanyRandom.png'
+            link.href = canvas.toDataURL("image/png")
+            link.click()
+        })
+    }) */
+</script>
+</head>
+
+<body>
+<header>
+    <div id="toolbar">
+        <div class="menu">
+            <div class="menu_title">
+                <img src="/images/top-hat.svg">
+            </div>
+        </div>
+    </div>
+    <div id="randomize">
+        <button class="viewpoint_button" onclick="randomize()">Randomize!</button>
+    </div>
+<!--     <div id="saveboard">
+        <button id="saveimage" class="viewpoint_button">Save as Image</button>
+    </div> -->
+    <span id="coords"></span>
+    <div id="buttons">
+        <button class="viewpoint_button">Settings</button>
+        <button class="viewpoint_button">Player Setup</button>
+    </div>
+
+</header>
+
+<aside>
+    <div style="overflow-y: scroll;">
+    <div id="settings">
+        <div class="general_setting">
+            <div id="turnrange" class="setting_name uses_dual_range 1 1 8">
+                <span>Initial Turn Range</span>
+            </div>
+        </div>
+        <div class="general_setting">
+            <div id="lengthrange" class="setting_name uses_dual_range 5 0 8">
+                <span>Game Length Range</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="initrange" class="setting_name uses_dual_range 0 -3 3">
+                <span>Initial Standing Range</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="debtrange" class="setting_name uses_dual_range 0 0 8">
+                <span>Initial Debt Range</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="balrange" class="setting_name uses_dual_range 5 0 10">
+                <span>Initial Balance Range</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="treasuryrange" class="setting_name uses_dual_range 15 0 30">
+                <span title="Evenly divides the chosen pool among company offices, randomly adding any remainder to offices.">Company Treasury Pool</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="regrange" class="setting_name uses_dual_range 0 0 5">
+                <span>Number of Regiments</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="shiprange" class="setting_name uses_dual_range 3 0 6">
+                <span>Starting Ships</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="govrange" class="setting_name uses_dual_range 0 0 8">
+                <span>Number of Governors</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="company_ships" class="setting_name uses_prob_input">
+                <span title="For each ship, the probability of it becoming a Company Ship.">Company Ship Probability</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="china_office" class="setting_name uses_prob_input">
+                <span>China Office Probability</span>
+            </div>
+        </div>
+        <div class="dereg_setting">
+            <div id="start_dereg" class="setting_name uses_prob_input">
+                <span>Start Dereg Probability</span>
+            </div>
+        </div>
+        <div class="dereg_setting">
+            <div id="allow_dereg" class="setting_name uses_prob_input">
+                <span>Allow Dereg Probability</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="2share_prob" class="setting_name uses_prob_input">
+                <span>+2/-2 Share Probability</span>
+            </div>
+        </div>
+        <div class="company_setting">
+            <div id="3share_prob" class="setting_name uses_prob_input">
+                <span title="If shares advanced to +2, this is the probability it advances to +3.">+3/-3 Share Probability</span>
+            </div>
+        </div>
+        <div class="india_setting">
+            <div id="empirerange" class="setting_name uses_dual_range 0 0 3">
+                <span>Number of Empires</span>
+            </div>
+        </div>
+        <div class="india_setting">
+            <div id="unrestrange" class="setting_name uses_dual_range 0 0 24">
+                <span>Total Unrest Range</span>
+            </div>
+        </div>
+        <div class="india_setting">
+            <div id="closedrange" class="setting_name uses_dual_range 0 0 17">
+                <span>Closed Orders Range</span>
+            </div>
+        </div>
+        <div class="law_setting">
+            <div id="lawrange" class="setting_name uses_dual_range 0 0 10">
+                <span>Number of Laws</span>
+            </div>
+        </div>
+        <div class="law_setting">
+            <div id="starting_laws" class="setting_name">
+                <span>Allowed Starting Laws</span>
+                <div id="allowed_laws">
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Calico Acts</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Envoy to China</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Army Spending</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Board of Control</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Debt Restructure</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Inclosure Acts</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Tenure Limits</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Sepoy Recruitments</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Ship Subsidy</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Trade Regulations</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Zamindar Taxes</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Treasure Reform</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Governor General</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Industry Subsidy</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Writer Privileges</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Window Tax Repeal</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Military Oversight</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Writer Graft Reform</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Company Aids Government</label><br>
+                    <input id="enclosure_acts" type="checkbox" checked>
+                    <label for="enclosure_acts">Royal Protection</label><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</aside>
+
+<main>
+    <div id="card_panel">
+        <div id="deck_outer" class="card law_back"></div>
+    </div>
+    <div id="boardwrap">
+        <div id="board">
+            <div id="pieces">
+                <div id="standing" class="piece company_status"></div>
+                <div id="debt" class="piece company_status"></div>
+                <div id="balance" class="piece company_status"></div>
+                <div id="turn" class="piece generic_status"></div>
+                <div id="social" class="piece social_power"></div>
+                <div id="share" class="piece share_power"></div>
+                <div id="shipping" class="piece shipping_power"></div>
+                <div id="manufacturing" class="piece manufacturing_power"></div>
+                <div id="votes" class="piece generic_status"></div>
+                <div id="+2" class="piece plustwo" hidden></div>
+                <div id="+3" class="piece plusthree" hidden></div>
+                <div id="dot_treasury" style="position: absolute;"><h1>3£</h1></div>
+                <div id="shipping_treasury" style="position: absolute;"><h1>3£</h1></div>
+                <div id="bombay_army" class="army" style="position: absolute;"></div>
+                <div id="madras_army" class="army" style="position: absolute;"></div>
+                <div id="bengal_army" class="army" style="position: absolute;"></div>
+                <div id="bombay_treasury" style="position: absolute;"><h1>3£</h1></div>
+                <div id="madras_treasury" style="position: absolute;"><h1>3£</h1></div>
+                <div id="bengal_treasury" style="position: absolute;"><h1>3£</h1></div>
+                <div id="bombay_seazone" class="seazone"></div>
+                <div id="madras_seazone" class="seazone"></div>
+                <div id="bengal_seazone" class="seazone"></div>
+                <div id="punjab" class="piece tower0"></div>
+                <div id="bombay" class="piece tower1"></div>
+                <div id="delhi" class="piece tower2"></div>
+                <div id="maratha" class="piece tower3"></div>
+                <div id="hyderabad" class="piece gov_hyderabad"></div>
+                <div id="mysore" class="piece gov_mysore"></div>
+                <div id="madras" class="piece gov_madras"></div>
+                <div id="bengal" class="piece gov_bengal"></div>
+
+                <div id="punjab_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="bombay_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="delhi_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="maratha_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="hyderabad_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="mysore_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="madras_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="bengal_flag" hidden>
+                    <div class="piece capital silver"></div>
+                    <div class="outlinecapital"></div>
+                    <div class="outlinedominated"></div>
+                </div>
+
+                <div id="punjab_o0" class="piece closed" hidden></div>
+                <div id="bombay_o0" class="piece closed" hidden></div>
+                <div id="bombay_o1" class="piece closed" hidden></div>
+                <div id="bombay_o2" class="piece closed" hidden></div>
+                <div id="mysore_o0" class="piece closed" hidden></div>
+                <div id="mysore_o1" class="piece closed" hidden></div>
+                <div id="madras_o0" class="piece closed" hidden></div>
+                <div id="madras_o1" class="piece closed" hidden></div>
+                <div id="hyderabad_o0" class="piece closed" hidden></div>
+                <div id="maratha_o0" class="piece closed" hidden></div>
+                <div id="maratha_o1" class="piece closed" hidden></div>
+                <div id="maratha_o2" class="piece closed" hidden></div>
+                <div id="delhi_o0" class="piece closed" hidden></div>
+                <div id="delhi_o1" class="piece closed" hidden></div>
+                <div id="delhi_o2" class="piece closed" hidden></div>
+                <div id="bengal_o0" class="piece closed" hidden></div>
+                <div id="bengal_o1" class="piece closed" hidden></div>
+                <div id="punjab_unrest" class="unrest_zone"></div>
+                <div id="bombay_unrest" class="unrest_zone"></div>
+                <div id="mysore_unrest" class="unrest_zone"></div>
+                <div id="madras_unrest" class="unrest_zone"></div>
+                <div id="hyderabad_unrest" class="unrest_zone"></div>
+                <div id="maratha_unrest" class="unrest_zone"></div>
+                <div id="delhi_unrest" class="unrest_zone"></div>
+                <div id="bengal_unrest" class="unrest_zone"></div>
+            </div>
+        </div>
+        <div id="parliament">
+            <div class="arm">
+                <img src="images/arm.png">
+            </div>
+        </div>
+
+        <div id="china" hidden>
+            <img src="images/china.png" style="width: 305px;">
+        </div>
+    </div>
+
+</main>
+</body>
+
+</html>
