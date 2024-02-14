@@ -234,6 +234,7 @@ function randomize(evt) {
     if (start_dereg) {
         let law = document.createElement("div")
         law.className = "card deregulation"
+        laws.push(law)
         document.getElementById("card_panel").appendChild(law)
     }
 
@@ -386,9 +387,8 @@ function randomize(evt) {
         let unrest = document.createElement("div")
         unrest.className = "piece unrest"
         unrest.style.backgroundImage = 'url("images/unrest.svg")'
-        let region = document.getElementById(unrest_zones[rand_range(0, unrest_zones.length)])
-        /*while (region.childElementCount > 3)
-            region = document.getElementById(unrest_zones[rand_range(0, unrest_zones.length)])*/
+        let zone = unrest_zones[rand_range(0, unrest_zones.length - 1)]
+        let region = document.getElementById(zone)
 
         region.appendChild(unrest)
     }
